@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load static %}
+<html lang="es">
+<head>
+    {%block title%}<title>Tareas</title>{%endblock%}
+
+</head>
+
+<h1>Lista de Tareas Pendientes</h1>
+
+<a href="{% url '#' %}">Agregar Tarea</a>
+
+<ul>
+  {% for task in tasks %}
+    <li>
+      {{ task.title }} - Fecha de vencimiento: {{ task.due_date }}
+      <a href="{% url 'ver_tarea' task.id %}">Ver</a>
+    </li>
+  {% empty %}
+    <li>No hay tareas pendientes.</li>
+  {% endfor %}
+</ul>

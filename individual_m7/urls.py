@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from individual_m7app.views import landing ,Ingreso
+from individual_m7app.views import landing ,Ingreso, TareasListaView
 from django.contrib.auth.views import LoginView, LogoutView
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing, name='landing'),
     path('login/',Ingreso.as_view(), name='Login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('tareas_lista/', TareasListaView.as_view(), name='Tareaslista'),
 ]

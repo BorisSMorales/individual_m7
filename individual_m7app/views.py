@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from django.views import View
+from .models import Task
 
 
 
@@ -33,4 +35,14 @@ class Ingreso(TemplateView):
             return render(request, self.template_name, { "form": form })
         else:
             return render(request, self.template_name, { "form": form })
+        
+
+
+
+class TareasListaView(View):
+    def get(self, request):
+        # Obtener todas las tareas pendientes del usuario actual, ordenadas por fecha de vencimiento
+        tasks = Task.objects.filter(user=request.user, status='pendiente').order_by('due_date')
+
+        return render(request, 'lista_tareas.html', {'tasks': tasks})
 
