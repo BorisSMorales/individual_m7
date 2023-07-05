@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .models import Task
+from .models import Task, Etiqueta
 from django.http import JsonResponse
 
 
@@ -41,12 +41,40 @@ class Ingreso(TemplateView):
 
 
 class TareasListaView(View):
-    def get(self, request):
-        # Obtener todas las tareas pendientes del usuario actual, ordenadas por fecha de vencimiento
-        tasks = Task.objects.filter(user=request.user.id, status='Pendiente').order_by('due_date')
 
-        return render(request, 'lista_tareas.html', {'tasks': tasks})
-    
+    etiquetas_disponibles = Etiqueta.objects.all()
+    def get(self, request):
+        # Obtener todas las tareas pendientes del usuario actual
+        tasks = Task.objects.filter(user=request.user, status='Pendiente')
+
+        # Obtener los valores únicos para las etiquetas y pasarlos al formulario
+        etiquetas = Task.objects.filter(user=request.user).values_list('tag__name', flat=True).distinct()
+
+        # Obtener los valores únicos para las fechas límite y pasarlos al formulario
+        fechas_limite = Task.objects.filter(user=request.user).values_list('due_date', flat=True).distinct()
+
+        # Obtener otros valores únicos para los campos de filtrado (si es necesario)
+
+        # Procesar el formulario de filtrado
+        etiqueta_filtro = request.GET.get('etiqueta')
+        fecha_limite_filtro = request.GET.get('fecha_limite')
+
+        if etiqueta_filtro:
+            tasks = tasks.filter(tag__name=etiqueta_filtro)
+
+        if fecha_limite_filtro:
+            tasks = tasks.filter(due_date=fecha_limite_filtro)
+
+        # Pasar los valores de filtrado al contexto para mostrarlos en el formulario
+        contexto = {
+            'tasks': tasks,
+            'etiquetas': etiquetas,
+            'fechas_limite': fechas_limite,
+            'etiqueta_filtro': etiqueta_filtro,
+            'fecha_limite_filtro': fecha_limite_filtro
+        }
+        return render(request, 'lista_tareas.html', {'tasks': tasks, 'etiquetas': etiquetas}) 
+       
 class TareaDetalleView(View):
 
     def get(self, request, tarea_id):
