@@ -1,22 +1,54 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
-<html lang="es">
-<head>
-    {%block title%}<title>Tareas</title>{%endblock%}
+{% block title %}<title>Tareas</title>{% endblock %}
 
-</head>
+{% block content %}
+<section class="vh-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items- h-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-white">
+            <div class="text-center pt-3 pb-2">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+              <h2 class="my-4">Lista de tareas</h2>
+              
+            </div>
 
-<h1>Lista de Tareas Pendientes</h1>
-
-<a href="{% url '#' %}">Agregar Tarea</a>
-
-<ul>
-  {% for task in tasks %}
-    <li>
-      {{ task.title }} - Fecha de vencimiento: {{ task.due_date }}
-      <a href="{% url 'ver_tarea' task.id %}">Ver</a>
-    </li>
-  {% empty %}
-    <li>No hay tareas pendientes.</li>
-  {% endfor %}
-</ul>
+            <div class="text-end mb-3">
+              <a href="#" class="btn btn-primary">Agregar tarea</a>
+            </div>
+            <table class="table text-white mb-0 w-100">
+              <thead>
+                <tr>
+                  <th scope="col">Tarea</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Fecha limite</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks %}
+                  <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.tag }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>
+                      <a href="{% url 'detalle_tarea' tarea_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="5">No hay tareas pendientes.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

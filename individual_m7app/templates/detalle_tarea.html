@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>Detalle de Tarea</title>{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">{{ tarea.title }}</h2>
+      <p>Descripción: {{ tarea.description }}</p>
+      <p>Estado: {{ tarea.get_status_display }}</p>
+      <p>Categoría: {{ tarea.tag }}</p>
+      <p>Fecha límite: {{ tarea.due_date }}</p>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary">Editar</a>
+        <a href="{% url 'confirmar_eliminar_tarea' tarea.id %}" class="btn btn-danger">Eliminar</a>
+        <a href="#" class="btn btn-success">Completar</a>
+        <a href="{% url 'Tareaslista' %}" class="btn btn-secondary">Retornar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  
+{% endblock %}

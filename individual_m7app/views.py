@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .models import Task
+from django.http import JsonResponse
 
 
 
@@ -42,7 +43,24 @@ class Ingreso(TemplateView):
 class TareasListaView(View):
     def get(self, request):
         # Obtener todas las tareas pendientes del usuario actual, ordenadas por fecha de vencimiento
-        tasks = Task.objects.filter(user=request.user, status='pendiente').order_by('due_date')
+        tasks = Task.objects.filter(user=request.user.id, status='Pendiente').order_by('due_date')
 
         return render(request, 'lista_tareas.html', {'tasks': tasks})
+    
+class TareaDetalleView(View):
+
+    def get(self, request, tarea_id):
+        # Obtener la tarea específica o mostrar un error 404 si no existe
+        tarea = get_object_or_404(Task, id=tarea_id)
+
+        return render(request, 'detalle_tarea.html', {'tarea': tarea})
+    
+def confirmar_eliminar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Task, id=tarea_id)
+    return render(request, 'confirmar_eliminar_tarea.html', {'tarea': tarea})
+
+def eliminar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Task, id=tarea_id)
+    tarea.delete()
+    return redirect('Tareaslista')
 

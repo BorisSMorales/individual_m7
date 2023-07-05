@@ -1,43 +1,42 @@
 {% extends 'base.html'%}
-
 {% load static %}
+
 <head>
     {%block title%}<title>Ingreso</title>{%endblock%}
-
 </head>
 
 {% block content %}
-    <section class="row">
-        <div class="col-6">
-            <div class="container">
-                <form method="post" class="card" style="width: 100%;">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <h5 class="card-title">Login</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Ingresa tus credenciales !</h6>
-                        <div class="form-group">
-                            <label for="id_username">Usuario</label>
-                            <input type="text" class="form-control" id="id_username" name="username" placeholder="Usuario" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_password">Contraseña</label>
-                            <input type="password" class="form-control" id="id_password" name="password" placeholder="Contraseña" required>
-                        </div>
-                        {% if form.errors %}
-                        <div class="alert alert-danger mt-3" role="alert">
-                            <h4>Errores</h4>
-                            {{ form.errors }}
-                        </div>
-                        {% endif %}
-                        <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+<section class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-6">
+        <div class="container">
+            <form method="post" class="card" style="width: 100%;">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Ingresa tus credenciales!</h6>
+                    <div class="form-group">
+                        <label for="id_username">Usuario</label>
+                        <input type="text" class="form-control" id="id_username" name="username" placeholder="Usuario" required>
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="id_password">Contraseña</label>
+                        <input type="password" class="form-control" id="id_password" name="password" placeholder="Contraseña" required>
+                    </div>
+                    {% if form.errors %}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        <h4>Errores</h4>
+                        {{ form.errors }}
+                    </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+                </div>
+            </form>
         </div>
-        <div class="col-6">
-            <div class="container">
-                <img src="{% static 'img/wizard.avif' %}" class="rounded-circle img-fluid" width="100%">
-            </div>
+    </div>
+    <div class="col-6">
+        <div class="container">
+            <img src="{% static 'img/wizard.avif' %}" class="rounded-circle img-fluid" width="70%">
         </div>
-    </section>
+    </div>
+</section>
 {% endblock %}
