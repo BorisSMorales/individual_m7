@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .models import Task, Etiqueta
 from django.http import JsonResponse
-
-
+from .forms import CrearTareaForm
+from django.urls import reverse_lazy
 
 from individual_m7app.forms import LoginForm
 
@@ -45,10 +45,10 @@ class TareasListaView(View):
     etiquetas_disponibles = Etiqueta.objects.all()
     def get(self, request):
         # Obtener todas las tareas pendientes del usuario actual
-        tasks = Task.objects.filter(user=request.user, status='Pendiente')
+        tasks = Task.objects.filter(user=request.user, status='pendiente')
 
         # Obtener los valores únicos para las etiquetas y pasarlos al formulario
-        etiquetas = Task.objects.filter(user=request.user).values_list('tag__name', flat=True).distinct()
+        etiquetas = Task.objects.filter(user=request.user).values_list('etiqueta__name', flat=True).distinct()
 
         # Obtener los valores únicos para las fechas límite y pasarlos al formulario
         fechas_limite = Task.objects.filter(user=request.user).values_list('due_date', flat=True).distinct()
@@ -60,7 +60,7 @@ class TareasListaView(View):
         fecha_limite_filtro = request.GET.get('fecha_limite')
 
         if etiqueta_filtro:
-            tasks = tasks.filter(tag__name=etiqueta_filtro)
+            tasks = tasks.filter(etiqueta__name=etiqueta_filtro)
 
         if fecha_limite_filtro:
             tasks = tasks.filter(due_date=fecha_limite_filtro)
@@ -92,3 +92,22 @@ def eliminar_tarea(request, tarea_id):
     tarea.delete()
     return redirect('Tareaslista')
 
+class CrearTareaView(TemplateView):
+    template_name = 'crear_tarea.html'
+    form_class = CrearTareaForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            tarea = form.save(commit=False)
+            tarea.user = request.user  # Asociar la tarea con el usuario autenticado
+            etiqueta_id = request.POST.get('etiqueta')
+            etiqueta = Etiqueta.objects.get(id=etiqueta_id)
+            tarea.etiqueta = etiqueta
+            tarea.save()
+            return redirect('Tareaslista')
+        return render(request, self.template_name, {'form': form})
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})

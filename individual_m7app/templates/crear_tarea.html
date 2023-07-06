@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>Crear Tarea</title>{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Crear Tarea</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

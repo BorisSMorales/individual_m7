@@ -20,7 +20,7 @@ class Task(models.Model):
     description = models.TextField()
     due_date = models.DateField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
-    tag = models.ForeignKey(Etiqueta, on_delete=models.SET_NULL, null=True)
+    etiqueta = models.ForeignKey(Etiqueta, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

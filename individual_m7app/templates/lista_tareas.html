@@ -16,7 +16,7 @@
             </div>
 
             <div class="text-end mb-3">
-              <a href="#" class="btn btn-primary">Agregar tarea</a>
+              <a href="{% url 'crear_tarea'%}" class="btn btn-primary">Agregar tarea</a>
             </div>
             <div class="text-end mb-3">
               <form method="get" class="form-inline">
@@ -51,8 +51,8 @@
                 {% for task in tasks %}
                   <tr>
                     <td>{{ task.title }}</td>
-                    <td>{{ task.status }}</td>
-                    <td>{{ task.tag }}</td>
+                    <td>{{ task.status|capfirst }}</td>
+                    <td>{{ task.etiqueta }}</td>
                     <td>{{ task.due_date }}</td>
                     <td>
                       <a href="{% url 'detalle_tarea' tarea_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
