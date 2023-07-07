@@ -19,7 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from individual_m7app import views
-from individual_m7app.views import landing ,Ingreso, TareasListaView, TareaDetalleView, CrearTareaView, EditarTareaView
+from individual_m7app.views import landing ,Ingreso, TareasListaView, TareaDetalleView, CrearTareaView, EditarTareaView, TareasHistorialView
 from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/',Ingreso.as_view(), name='Login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('tareas_lista/', TareasListaView.as_view(), name='Tareaslista'),
+    path('tareas_historial/', TareasHistorialView.as_view(), name='TareasHistorial'),
     path('tareas/<int:task_id>/', TareaDetalleView.as_view(), name='detalle_tarea'),
     path('tareas/<int:task_id>/eliminar/', views.confirmar_eliminar_tarea, name='confirmar_eliminar_tarea'),
     path('tareas/<int:task_id>/eliminar/confirmar/', views.eliminar_tarea, name='eliminar_tarea'),

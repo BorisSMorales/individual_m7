@@ -125,3 +125,11 @@ class EditarTareaView(View):
             form.save()
             return redirect('Tareaslista')
         return render(request, 'tarea_editar.html', {'form': form})
+    
+class TareasHistorialView(View):
+    def get(self, request):
+        # Obtener todas las tareas
+        tasks = Task.objects.all()
+
+        return render(request, 'historial_tareas.html', {'tasks': tasks})
+  
