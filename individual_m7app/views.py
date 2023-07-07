@@ -43,7 +43,7 @@ class Ingreso(TemplateView):
 class TareasListaView(View):
     def get(self, request):
         # Obtener todas las tareas pendientes del usuario actual, ordenadas por fecha de vencimiento
-        tasks = Task.objects.filter(user=request.user.id, status='Pendiente').order_by('due_date')
+        tasks = Task.objects.filter(user=request.user.id, estado='pendiente').order_by('fecha_limite')
 
         return render(request, 'lista_tareas.html', {'tasks': tasks})
     
