@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}<title>Confirmar Eliminación de Tarea</title>{% endblock %}
+{% block title %}<title>Confirmar Tarea Completada</title>{% endblock %}
 
 {% block content %}
 <section class="container py-5">
   <div class="card">
     <div class="card-body">
-      <h2 class="card-title">Confirmar Eliminación</h2>
-      <p>¿Estás seguro de que deseas eliminar la tarea "{{ tarea.titulo }}"?</p>
+      <h2 class="card-title">Confirmar tarea completada</h2>
+      <p>¿Estás seguro de que deseas completar la tarea "{{ tarea.titulo }}"?</p>
 
       <div class="btn-group">
         <a href="{% url 'Tareaslista' %}" class="btn btn-secondary">Cancelar</a>
-        <a href="{% url 'eliminar_tarea' tarea.id %}" class="btn btn-danger">Eliminar</a>
+        <a href="{% url 'completar_tarea' tarea.id %}" class="btn btn-success">Completar</a>
       </div>
     </div>
   </div>

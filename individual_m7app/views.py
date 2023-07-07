@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .models import Task, Etiqueta
 from django.http import JsonResponse
-from .forms import CrearTareaForm
+from .forms import CrearTareaForm, ObservacionForm
 from django.urls import reverse_lazy
 
 from individual_m7app.forms import LoginForm
@@ -76,12 +76,19 @@ class TareasListaView(View):
         return render(request, 'lista_tareas.html', {'tasks': tasks, 'etiquetas': etiquetas}) 
        
 class TareaDetalleView(View):
-
     def get(self, request, task_id):
-        # Obtener la tarea específica o mostrar un error 404 si no existe
         tarea = get_object_or_404(Task, id=task_id)
-
-        return render(request, 'detalle_tarea.html', {'tarea': tarea})
+        form = ObservacionForm(initial={'observaciones': tarea.observacion})
+        return render(request, 'detalle_tarea.html', {'tarea': tarea, 'form': form})
+    
+    def post(self, request, task_id):
+        tarea = get_object_or_404(Task, id=task_id)
+        form = ObservacionForm(request.POST)
+        if form.is_valid():
+            observaciones = form.cleaned_data['observaciones']
+            tarea.observacion = observaciones
+            tarea.save()
+        return redirect('Tareaslista')
     
 def confirmar_eliminar_tarea(request, task_id):
     tarea = get_object_or_404(Task, id=task_id)
@@ -90,6 +97,16 @@ def confirmar_eliminar_tarea(request, task_id):
 def eliminar_tarea(request, task_id):
     tarea = get_object_or_404(Task, id=task_id)
     tarea.delete()
+    return redirect('Tareaslista')
+
+def confirmar_completar_tarea(request, task_id):
+    tarea = get_object_or_404(Task, id=task_id)
+    return render(request, 'confirmar_completar_tarea.html', {'tarea': tarea})
+
+def completar_tarea(request, task_id):
+    tarea = get_object_or_404(Task, id=task_id)
+    tarea.estado = 'completada'
+    tarea.save()
     return redirect('Tareaslista')
 
 class CrearTareaView(TemplateView):
@@ -125,3 +142,5 @@ class EditarTareaView(View):
             form.save()
             return redirect('Tareaslista')
         return render(request, 'tarea_editar.html', {'form': form})
+    
+    

@@ -10,12 +10,20 @@
       <p>Descripción: {{ tarea.descripcion }}</p>
       <p>Estado: {{ tarea.get_estado_display }}</p>
       <p>Categoría: {{ tarea.etiqueta }}</p>
-      <p>Fecha límite: {{ fecha_limite }}</p>
+      <p>Fecha límite: {{ tarea.fecha_limite }}</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        <p>Observaciones: </p>
+        {{ form.observaciones }}
+        <button type="submit">Guardar</button>
+      </form>
+      
 
       <div class="btn-group">
         <a href="{% url 'tarea_editar' tarea.id %}" class="btn btn-primary">Editar</a>
         <a href="{% url 'confirmar_eliminar_tarea' tarea.id %}" class="btn btn-danger">Eliminar</a>
-        <a href="#" class="btn btn-success">Completar</a>
+        <a href="{% url 'confirmar_completar_tarea' tarea.id %}" class="btn btn-success">Completar</a>
         <a href="{% url 'Tareaslista' %}" class="btn btn-secondary">Retornar</a>
       </div>
     </div>

@@ -33,5 +33,7 @@ urlpatterns = [
     path('tareas/<int:task_id>/eliminar/confirmar/', views.eliminar_tarea, name='eliminar_tarea'),
     path('crear-tarea/', CrearTareaView.as_view(), name='crear_tarea'),
     path('tareas/<int:task_id>/editar', EditarTareaView.as_view(), name='tarea_editar'),
+    path('tareas/<int:task_id>/completar/', views.confirmar_completar_tarea, name='confirmar_completar_tarea'),
+    path('tareas/<int:task_id>/completar/confirmar/', views.completar_tarea, name='completar_tarea'),
 
 ]

@@ -41,3 +41,6 @@ class CrearTareaForm(forms.ModelForm):
         widgets = {
             'fecha_limite': forms.DateInput(attrs={'type': 'date'})
         }
+
+class ObservacionForm(forms.Form):
+    observaciones = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}))
