@@ -77,18 +77,18 @@ class TareasListaView(View):
        
 class TareaDetalleView(View):
 
-    def get(self, request, tarea_id):
+    def get(self, request, task_id):
         # Obtener la tarea específica o mostrar un error 404 si no existe
-        tarea = get_object_or_404(Task, id=tarea_id)
+        tarea = get_object_or_404(Task, id=task_id)
 
         return render(request, 'detalle_tarea.html', {'tarea': tarea})
     
-def confirmar_eliminar_tarea(request, tarea_id):
-    tarea = get_object_or_404(Task, id=tarea_id)
+def confirmar_eliminar_tarea(request, task_id):
+    tarea = get_object_or_404(Task, id=task_id)
     return render(request, 'confirmar_eliminar_tarea.html', {'tarea': tarea})
 
-def eliminar_tarea(request, tarea_id):
-    tarea = get_object_or_404(Task, id=tarea_id)
+def eliminar_tarea(request, task_id):
+    tarea = get_object_or_404(Task, id=task_id)
     tarea.delete()
     return redirect('Tareaslista')
 
@@ -111,3 +111,17 @@ class CrearTareaView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
+    
+class EditarTareaView(View):
+    def get(self, request, task_id):
+        task = get_object_or_404(Task, id=task_id, user=request.user)
+        form = CrearTareaForm(instance=task)
+        return render(request, 'tarea_editar.html', {'form': form})
+
+    def post(self, request, task_id):
+        task = get_object_or_404(Task, id=task_id, user=request.user)
+        form = CrearTareaForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('Tareaslista')
+        return render(request, 'tarea_editar.html', {'form': form})
