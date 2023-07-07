@@ -6,11 +6,11 @@
 <section class="container py-5">
   <div class="card">
     <div class="card-body">
-      <h2 class="card-title">{{ tarea.title }}</h2>
-      <p>Descripción: {{ tarea.description }}</p>
-      <p>Estado: {{ tarea.get_status_display }}</p>
-      <p>Categoría: {{ tarea.tag }}</p>
-      <p>Fecha límite: {{ tarea.due_date }}</p>
+      <h2 class="card-title">{{ tarea.titulo }}</h2>
+      <p>Descripción: {{ tarea.descripcion }}</p>
+      <p>Estado: {{ tarea.get_estado_display }}</p>
+      <p>Categoría: {{ tarea.etiqueta }}</p>
+      <p>Fecha límite: {{ fecha_limite }}</p>
 
       <div class="btn-group">
         <a href="{% url 'tarea_editar' tarea.id %}" class="btn btn-primary">Editar</a>

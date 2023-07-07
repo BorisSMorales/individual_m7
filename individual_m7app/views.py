@@ -45,13 +45,13 @@ class TareasListaView(View):
     etiquetas_disponibles = Etiqueta.objects.all()
     def get(self, request):
         # Obtener todas las tareas pendientes del usuario actual
-        tasks = Task.objects.filter(user=request.user, status='pendiente')
+        tasks = Task.objects.filter(user=request.user, estado='pendiente')
 
         # Obtener los valores únicos para las etiquetas y pasarlos al formulario
         etiquetas = Task.objects.filter(user=request.user).values_list('etiqueta__name', flat=True).distinct()
 
         # Obtener los valores únicos para las fechas límite y pasarlos al formulario
-        fechas_limite = Task.objects.filter(user=request.user).values_list('due_date', flat=True).distinct()
+        fechas_limite = Task.objects.filter(user=request.user).values_list('fecha_limite', flat=True).distinct()
 
         # Obtener otros valores únicos para los campos de filtrado (si es necesario)
 
@@ -63,7 +63,7 @@ class TareasListaView(View):
             tasks = tasks.filter(etiqueta__name=etiqueta_filtro)
 
         if fecha_limite_filtro:
-            tasks = tasks.filter(due_date=fecha_limite_filtro)
+            tasks = tasks.filter(fecha_limite=fecha_limite_filtro)
 
         # Pasar los valores de filtrado al contexto para mostrarlos en el formulario
         contexto = {
