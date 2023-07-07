@@ -16,11 +16,11 @@ class Task(models.Model):
         ('completada', 'Completada'),
     )
 
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    due_date = models.DateField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
-    tag = models.ForeignKey(Etiqueta, on_delete=models.SET_NULL, null=True)
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    fecha_limite = models.DateField()
+    estado = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
+    etiqueta = models.ForeignKey(Etiqueta, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
