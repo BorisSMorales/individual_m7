@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Task, Etiqueta
+from .models import Task, Etiqueta, User
 
 
 class LoginForm(forms.Form):
@@ -30,6 +30,7 @@ class LoginForm(forms.Form):
     
 class CrearTareaForm(forms.ModelForm):
     etiqueta = forms.ChoiceField(choices=[], label='Etiqueta')
+    usuario = forms.ModelChoiceField(queryset=User.objects.all(), label='Usuario')
 
     def __init__(self, *args, **kwargs):
         super(CrearTareaForm, self).__init__(*args, **kwargs)
@@ -37,7 +38,7 @@ class CrearTareaForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ['titulo', 'descripcion', 'fecha_limite', 'estado', ]
+        fields = ['titulo', 'descripcion', 'fecha_limite', 'estado','prioridad','usuario' ]
         widgets = {
             'fecha_limite': forms.DateInput(attrs={'type': 'date'})
         }

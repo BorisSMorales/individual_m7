@@ -76,10 +76,21 @@ class TareasListaView(View):
         return render(request, 'lista_tareas.html', {'tasks': tasks, 'etiquetas': etiquetas}) 
        
 class TareaDetalleView(View):
+    template_name = 'detalle_tarea.html'
+    form_class = ObservacionForm
+
     def get(self, request, task_id):
         tarea = get_object_or_404(Task, id=task_id)
-        form = ObservacionForm(initial={'observaciones': tarea.observacion})
-        return render(request, 'detalle_tarea.html', {'tarea': tarea, 'form': form})
+        observaciones_anteriores = tarea.observacion if tarea.observacion else ''
+        form = self.form_class(initial={'observaciones': observaciones_anteriores})
+
+        context = {
+            'tarea': tarea,
+            'form': form,
+            'prioridad': tarea.prioridad,  # Agrega el campo prioridad al contexto
+        }
+
+        return render(request, self.template_name, context)
     
     def post(self, request, task_id):
         tarea = get_object_or_404(Task, id=task_id)
@@ -109,7 +120,7 @@ def completar_tarea(request, task_id):
     tarea.save()
     return redirect('Tareaslista')
 
-class CrearTareaView(TemplateView):
+class CrearTareaView(View):
     template_name = 'crear_tarea.html'
     form_class = CrearTareaForm
 
@@ -117,16 +128,20 @@ class CrearTareaView(TemplateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             tarea = form.save(commit=False)
-            tarea.user = request.user  # Asociar la tarea con el usuario autenticado
-            etiqueta_id = request.POST.get('etiqueta')
-            etiqueta = Etiqueta.objects.get(id=etiqueta_id)
-            tarea.etiqueta = etiqueta
+            if request.user.is_staff:  # Verifica si el usuario es "staff"
+                tarea.user = form.cleaned_data['usuario']  # Asigna el usuario seleccionado en el formulario
+            else:
+                tarea.user = request.user  # Asigna el usuario actual
+            etiqueta_id = form.cleaned_data['etiqueta']  # Obtén el ID de la etiqueta seleccionada
+            etiqueta = Etiqueta.objects.get(id=etiqueta_id)  # Recupera la instancia de la etiqueta
+            tarea.etiqueta = etiqueta  # Asigna la etiqueta a la tarea
             tarea.save()
             return redirect('Tareaslista')
         return render(request, self.template_name, {'form': form})
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        form.fields['etiqueta'].queryset = Etiqueta.objects.all()  # Agrega el queryset de etiquetas al formulario
         return render(request, self.template_name, {'form': form})
     
 class EditarTareaView(View):

@@ -44,7 +44,9 @@
                   <th scope="col">Estado</th>
                   <th scope="col">Categoria</th>
                   <th scope="col">Fecha limite</th>
+                  <th scope="col">Prioridad</th>
                   <th scope="col">Acciones</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -54,6 +56,7 @@
                     <td>{{ task.estado|capfirst }}</td>
                     <td>{{ task.etiqueta }}</td>
                     <td>{{ task.fecha_limite }}</td>
+                    <td>{{ task.prioridad }}</td>
                     <td>
                       <a href="{% url 'detalle_tarea' task_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
                   </tr>

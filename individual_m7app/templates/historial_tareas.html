@@ -44,7 +44,9 @@
                   <th scope="col">Estado</th>
                   <th scope="col">Categoria</th>
                   <th scope="col">Fecha limite</th>
+                  <th scope="col">Prioridad</th>
                   <th scope="col">Acciones</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -54,6 +56,15 @@
                     <td>{{ task.estado|capfirst }}</td>
                     <td>{{ task.etiqueta }}</td>
                     <td>{{ task.fecha_limite }}</td>
+                    <td>
+                      {% if task.prioridad.nombre == 'Prioridad Alta' %}
+                          <span class="prioridad-alta">{{ task.prioridad.nombre }}</span>
+                      {% elif task.prioridad.nombre == 'Prioridad Media' %}
+                          <span class="prioridad-media">{{ task.prioridad.nombre }}</span>
+                      {% elif task.prioridad.nombre == 'Prioridad Baja' %}
+                          <span class="prioridad-baja">{{ task.prioridad.nombre }}</span>
+                      {% endif %}
+                  </td>
                     <td>
                       <a href="{% url 'detalle_tarea' task_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
                   </tr>

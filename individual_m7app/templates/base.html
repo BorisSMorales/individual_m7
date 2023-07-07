@@ -16,10 +16,11 @@
                 <h3 class="float-md-start mb-0">Wizard Task Manager 🔥</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" href="{% url 'landing' %}">Inicio</a>
-                    <a class="nav-link" href="{% url 'TareasHistorial' %}">Historial de Tareas</a>
                     
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    <a class="nav-link" href="{% url 'TareasHistorial' %}">Historial de Tareas</a>
+
                     {% comment %} <a class="nav-link" href="{% url 'Usuarios' %}">Usuarios</a> {% endcomment %}
                     {% comment %} <a class="nav-link" href="{% url 'Restringido' %}">Pagina Restringida</a> {% endcomment %}
                     {% else %}

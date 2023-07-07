@@ -47,3 +47,19 @@ body {
     background-clip: padding-box;
     box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
 }
+
+.prioridad-alta {
+    color: red !important;
+    -webkit-text-stroke: 0.1px black;
+}
+
+.prioridad-media {
+    color: yellow !important;
+    -webkit-text-stroke: 0.2px black;
+    text-shadow: 0 ;
+
+}
+
+.prioridad-baja {
+    color: green !important;
+}
