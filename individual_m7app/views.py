@@ -45,7 +45,7 @@ class TareasListaView(View):
     etiquetas_disponibles = Etiqueta.objects.all()
     def get(self, request):
         # Obtener todas las tareas pendientes del usuario actual
-        tasks = Task.objects.filter(user=request.user, status='pendiente')
+        tasks = Task.objects.filter(user=request.user, estado='pendiente')
 
         # Obtener los valores únicos para las etiquetas y pasarlos al formulario
         etiquetas = Task.objects.filter(user=request.user).values_list('etiqueta__name', flat=True).distinct()
