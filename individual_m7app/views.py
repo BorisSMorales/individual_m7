@@ -77,14 +77,14 @@ class TareasListaView(View):
        
 class TareaDetalleView(View):
 
-    def get(self, request, task_id):
+    def get(self, request, tarea_id):
         # Obtener la tarea específica o mostrar un error 404 si no existe
-        tarea = get_object_or_404(Task, id=task_id)
+        tarea = get_object_or_404(Task, id=tarea_id)
 
         return render(request, 'detalle_tarea.html', {'tarea': tarea})
     
-def confirmar_eliminar_tarea(request, task_id):
-    tarea = get_object_or_404(Task, id=task_id)
+def confirmar_eliminar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Task, id=tarea_id)
     return render(request, 'confirmar_eliminar_tarea.html', {'tarea': tarea})
 
 def eliminar_tarea(request, task_id):
@@ -100,7 +100,7 @@ class CrearTareaView(TemplateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             tarea = form.save(commit=False)
-            tarea.user = request.user  # Asociar la tarea con el usuario autenticado
+            tarea.user = request.user  
             etiqueta_id = request.POST.get('etiqueta')
             etiqueta = Etiqueta.objects.get(id=etiqueta_id)
             tarea.etiqueta = etiqueta
