@@ -37,7 +37,7 @@ class CrearTareaForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ['title', 'description', 'due_date', 'status', ]
+        fields = ['titulo', 'descripcion', 'fecha_limite', 'estado', ]
         widgets = {
-            'due_date': forms.DateInput(attrs={'type': 'date'})
+            'fecha_limite': forms.DateInput(attrs={'type': 'date'})
         }

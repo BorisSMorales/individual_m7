@@ -50,10 +50,10 @@
               <tbody>
                 {% for task in tasks %}
                   <tr>
-                    <td>{{ task.title }}</td>
-                    <td>{{ task.status|capfirst }}</td>
+                    <td>{{ task.titutlo }}</td>
+                    <td>{{ task.estado|capfirst }}</td>
                     <td>{{ task.etiqueta }}</td>
-                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.fecha_limite }}</td>
                     <td>
                       <a href="{% url 'detalle_tarea' tarea_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
                   </tr>
