@@ -25,7 +25,9 @@
       <div class="btn-group">
         <a href="{% url 'tarea_editar' tarea.id %}" class="btn btn-info text-white">Editar</a>
         <a href="{% url 'confirmar_eliminar_tarea' tarea.id %}" class="btn btn-danger">Eliminar</a>
+        {% if tarea.estado != 'completada' %}
         <a href="#" class="btn btn-success">Completar</a>
+        {% endif %}
         <a href="{% url 'Tareaslista' %}" class="btn btn-secondary">Retornar</a>
       </div>
     </div>

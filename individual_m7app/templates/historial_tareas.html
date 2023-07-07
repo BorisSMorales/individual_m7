@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>Historial Tareas</title>{% endblock %}
+
+{% block content %}
+<section class="vh-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items- h-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-white">
+            <div class="text-center pt-3 pb-2">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+              <h2 class="my-4">Lista de tareas</h2>
+              
+            </div>
+
+            <div class="text-end mb-3">
+              <a href="{% url 'crear_tarea'%}" class="btn btn-primary">Agregar tarea</a>
+            </div>
+            <div class="text-end mb-3">
+              <form method="get" class="form-inline">
+                <div class="form-group mb-2">
+                  <label for="etiqueta" class="mr-2">Etiqueta:</label>
+                  <select name="etiqueta" id="etiqueta" class="form-control">
+                    <option value="">Todas</option>
+                    {% for etiqueta in etiquetas %}
+                      <option value="{{ etiqueta }}">{{ etiqueta }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group mb-2 ml-3">
+                  <label for="fecha_limite" class="mr-2">Fecha límite:</label>
+                  <input type="date" name="fecha_limite" id="fecha_limite" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary ml-3">Filtrar</button>
+              </form>
+            </div>
+            
+            <table class="table text-white mb-0 w-100">
+              <thead>
+                <tr>
+                  <th scope="col">Tarea</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Fecha limite</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks %}
+                  <tr>
+                    <td>{{ task.titulo }}</td>
+                    <td>{{ task.estado|capfirst }}</td>
+                    <td>{{ task.etiqueta }}</td>
+                    <td>{{ task.fecha_limite }}</td>
+                    <td>
+                      <a href="{% url 'detalle_tarea' task_id=task.id %}" class="btn btn-primary">Ver</a>                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="5">No hay tareas pendientes.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
