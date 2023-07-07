@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'individual_m7.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'individual_7', 
-        'USER': 'usuario1',
-        'PASSWORD': 'martini123',
-        'HOST': 'localhost', 
+        'NAME': 'individual_m7_344v', 
+        'USER': 'boris_m7',
+        'PASSWORD': 'FqWlS9VbhnbtqiOQQUGVMCPl5KJ6QII9',
+        'HOST': 'dpg-cijqe0mnqql0l1tdk4m0-a.oregon-postgres.render.com', 
         'PORT': '5432',
     }
 }
