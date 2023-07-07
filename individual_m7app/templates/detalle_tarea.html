@@ -14,16 +14,18 @@
 
       <form method="POST">
         {% csrf_token %}
-        <p>Observaciones: </p>
+        <div class="form-group">
+        <p>Observaciones:</p>
         {{ form.observaciones }}
-        <button type="submit">Guardar</button>
+      </div>
+        <button type="submit" class="btn btn-primary mt-1">Guardar</button>
       </form>
       
 
       <div class="btn-group">
-        <a href="{% url 'tarea_editar' tarea.id %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'tarea_editar' tarea.id %}" class="btn btn-info text-white">Editar</a>
         <a href="{% url 'confirmar_eliminar_tarea' tarea.id %}" class="btn btn-danger">Eliminar</a>
-        <a href="{% url 'confirmar_completar_tarea' tarea.id %}" class="btn btn-success">Completar</a>
+        <a href="#" class="btn btn-success">Completar</a>
         <a href="{% url 'Tareaslista' %}" class="btn btn-secondary">Retornar</a>
       </div>
     </div>
