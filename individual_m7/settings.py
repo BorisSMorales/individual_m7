@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,12 +77,12 @@ WSGI_APPLICATION = 'individual_m7.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'individual_m7_344v', 
-        'USER': 'boris_m7',
-        'PASSWORD': 'FqWlS9VbhnbtqiOQQUGVMCPl5KJ6QII9',
-        'HOST': 'dpg-cijqe0mnqql0l1tdk4m0-a.oregon-postgres.render.com', 
-        'PORT': '5432',
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME' : os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
